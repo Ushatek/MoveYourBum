@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MoveYourBum.Views.DayScheduleV.DayScheduleDetailsPage"
+             xmlns:model="clr-namespace:MoveYourBum.Service.Reference" 
+             xmlns:local="clr-namespace:MoveYourBum.ViewModels.DaySchedule"
+             Title="{Binding Title}"
+             x:Name="BrowseItemsPage">
+
+    <!--
+      x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
+      https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
+    -->
+    <ContentPage.Content>
+        <StackLayout Spacing="3" Padding="15">
+            <Label Text="{Binding Name}" Style="{DynamicResource ListItemTextStyle}" FontSize="18" HorizontalTextAlignment="Center" />
+            <Label Text="{Binding Description}" Style="{DynamicResource ListItemTextStyle}" FontSize="16" HorizontalTextAlignment="Center"/>
+            <Label Style="{DynamicResource ListItemTextStyle}" LineBreakMode="NoWrap" HorizontalTextAlignment="Center" FontSize="16">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Podniesiona waga wszystkich wykonanych ćwiczeń: " />
+                        <Span Text="{Binding LiftedTotal}" />
+                        <Span Text="kg" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label Text="Lista ćwiczeń treningu:" Style="{DynamicResource ListItemTextStyle}" FontSize="18" Margin="0,20,0,0" 
+                   BackgroundColor="{StaticResource Primary}" HorizontalTextAlignment="Center" Padding="5" HorizontalOptions="FillAndExpand"/>
+            <RefreshView x:DataType="local:DayScheduleDetailsViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}" >
+                <CollectionView x:Name="ItemsListView"
+                                ItemsSource="{Binding Items}"
+                                SelectionMode="None">
+                    <CollectionView.ItemTemplate BackgroundColor="{StaticResource Secondary}">
+                        <DataTemplate >
+                            <StackLayout Padding="10" x:DataType="model:ScheduleExerciseForView" >
+                                <Frame BorderColor="Black" Padding="5" BackgroundColor="{StaticResource Primary}">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.ItemTappedCommand, Source={x:Reference BrowseItemsPage}}" CommandParameter="{Binding .}" />
+                                    </Frame.GestureRecognizers>
+                                    <StackLayout Orientation="Vertical">
+                                        <Label Text="{Binding ExerciseName}" 
+                                               LineBreakMode="NoWrap" 
+                                               Style="{DynamicResource ListItemTextStyle}" 
+                                               FontSize="16" HorizontalTextAlignment="Center" 
+                                               Padding="10" HorizontalOptions="FillAndExpand" />
+                                        <Label Style="{DynamicResource ListItemTextStyle}" LineBreakMode="NoWrap" Margin="0,0,0,10">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Uwagi: " />
+                                                    <Span Text="{Binding Annotation}" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Button Style="{DynamicResource ListItemTextStyle}" Margin="0,5,0,0" Padding="20" Text="Powtórzenia ćwiczenia" BackgroundColor="{StaticResource Secondary}"  
+                                                Command="{Binding ManageSetsCommand, Source={RelativeSource AncestorType={x:Type local:DayScheduleDetailsViewModel}}}"
+                                                FontSize="18" CommandParameter="{Binding .}"/>
+                                    </StackLayout>
+                                </Frame>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+            <!--<StackLayout Orientation="Horizontal">
+                <Button Text="Zarządzaj ćwiczeniami treningu" Command="{Binding ManageSchedulesCommand}" HorizontalOptions="FillAndExpand"></Button>
+            </StackLayout>-->
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

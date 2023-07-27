@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:local="clr-namespace:MoveYourBum.ViewModels.ExerciseVM" 
+             xmlns:model="clr-namespace:MoveYourBum.Service.Reference"
+             x:Class="MoveYourBum.Views.ExerciseV.ExerciseDetailsPage"
+             Title="{Binding Title}"
+             x:Name="BrowseItemsPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Dodaj nowe zdjecie" Command="{Binding AddItemCommand}" />
+    </ContentPage.ToolbarItems>
+    <!--
+      x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
+      https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
+    -->
+    <StackLayout Spacing="3" Padding="15">
+        <Label Text="{Binding Name}" Style="{DynamicResource ListItemTextStyle}" FontSize="18" HorizontalTextAlignment="Center" Grid.Row="0" />
+        <Label Text="{Binding Description}" Style="{DynamicResource ListItemTextStyle}" FontSize="16" HorizontalTextAlignment="Center" Grid.Row="1" />
+        <Label Text="Technika wykonania ćwiczenia" HorizontalTextAlignment="Center" Grid.Row="2" Style="{DynamicResource ListItemTextStyle}"/>
+        <Label Text="{Binding ProperTechniqueDescription}" FontSize="14" Grid.Row="3" />
+        <Label Text="Zaangażowane mięśnie" HorizontalTextAlignment="Center" Grid.Row="4" Style="{DynamicResource ListItemTextStyle}"/>
+        <Label Text="{Binding MuscleInvolvedDescription}" FontSize="14" Grid.Row="5" />
+        <CollectionView x:Name="ItemsListView"
+                        ItemsSource="{Binding Items}"
+                        SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="10" x:DataType="model:ExercisePhotoForView">
+                        <Label Text="{Binding FileName}" 
+                               Style="{DynamicResource ListItemTextStyle}" 
+                               FontSize="15" />
+                        <Image Source="{Binding FileUrl}"/>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <StackLayout Orientation="Horizontal">
+            <Button Text="Zarządzaj zdjęciami" Command="{Binding ManagePhotosCommand}" HorizontalOptions="FillAndExpand"></Button>
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MoveYourBum.Views.ScheduleExerciseSetV.ScheduleExerciseSetEditPage"
+             Shell.PresentationMode="ModalAnimated"
+             Title="Edytowanie potwórzeń ćwiczenia">
+    <ContentPage.Content>
+        <StackLayout Spacing="3" Padding="15">
+            <Label Text="Planowane powtórzenia" FontSize="Medium" />
+            <Entry Text="{Binding PlannedReps, Mode=TwoWay}" FontSize="Medium" />
+            <Label Text="Zrobione powtórzenia" FontSize="Medium" />
+            <Entry Text="{Binding ActualReps, Mode=TwoWay}" FontSize="Medium" />
+            <Label Text="Waga użytych ciężarów" FontSize="Medium" />
+            <Entry Text="{Binding WeightUsed, Mode=TwoWay}" FontSize="Medium" />
+
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Anuluj" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
+                <Button Text="Zapisz zmiany" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
+                <Button Text="Usuń" Command="{Binding DeleteCommand}" HorizontalOptions="FillAndExpand"></Button>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

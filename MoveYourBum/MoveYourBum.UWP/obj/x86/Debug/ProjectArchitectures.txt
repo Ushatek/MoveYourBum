@@ -1,0 +1,1 @@
+F:\Studia\Semestr6\Projektowanie mobilnych aplikacji biznesowych\Projekt\MoveYourBum\MoveYourBum.UWP\MoveYourBum.UWP.csproj;x86

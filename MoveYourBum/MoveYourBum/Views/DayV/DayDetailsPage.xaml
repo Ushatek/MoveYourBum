@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:local="clr-namespace:MoveYourBum.ViewModels.DayVM" 
+             xmlns:model="clr-namespace:MoveYourBum.Service.Reference"
+             x:Class="MoveYourBum.Views.DayV.DayDetailsPage"
+             Title="{Binding Title}"
+             x:Name="BrowseItemsPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Dodaj trening" Command="{Binding AddItemCommand}" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout Spacing="3" Padding="15">
+            <Label Text="{Binding Date, StringFormat='{0:d}'}" Style="{DynamicResource ListItemTextStyle}" FontSize="18" HorizontalTextAlignment="Center" />
+            <Label Text="{Binding Notes, StringFormat='{0:d}'}" Style="{DynamicResource ListItemTextStyle}" FontSize="16" HorizontalTextAlignment="Center" />
+            <Label Text="Treningi dnia:" Style="{DynamicResource ListItemTextStyle}" FontSize="18" Margin="0,20,0,0" BackgroundColor="{StaticResource Primary}" HorizontalTextAlignment="Center" Padding="5" HorizontalOptions="FillAndExpand"/>
+            <RefreshView x:DataType="local:DayDetailsViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+                <CollectionView x:Name="ItemsListView"
+                                ItemsSource="{Binding Items}"
+                                SelectionMode="Single"
+                                SelectionChangedCommand="{Binding ItemSelectedCommand}"
+                                SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference ItemsListView}}">
+                    <CollectionView.ItemTemplate BackgroundColor="{StaticResource Secondary}">
+                        <DataTemplate>
+                            <StackLayout Padding="10" x:DataType="model:DayScheduleForView">
+                                <Label Text="{Binding ScheduleName}" 
+                                        LineBreakMode="NoWrap" 
+                                        Style="{DynamicResource ListItemTextStyle}" 
+                                        FontSize="19" HorizontalTextAlignment="Center" 
+                                        BackgroundColor="{StaticResource Secondary}" Padding="10" 
+                                        HorizontalOptions="FillAndExpand" />
+                                <Label Text="{Binding ScheduleDescription}" 
+                                        LineBreakMode="NoWrap" 
+                                        Style="{DynamicResource ListItemTextStyle}" 
+                                        FontSize="16" HorizontalTextAlignment="Center" 
+                                        Margin="0,0,0,20" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Zarządzaj treningami" Command="{Binding ManageScheduleCommand}" HorizontalOptions="FillAndExpand"></Button>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

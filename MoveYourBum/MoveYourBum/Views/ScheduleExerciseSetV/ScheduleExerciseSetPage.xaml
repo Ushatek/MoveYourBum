@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MoveYourBum.Views.ScheduleExerciseSetV.ScheduleExerciseSetPage"
+             Title="{Binding Title}"
+             xmlns:local="clr-namespace:MoveYourBum.ViewModels.ScheduleExerciseSetVM"  
+             xmlns:model="clr-namespace:MoveYourBum.Service.Reference"  
+             x:Name="BrowseItemsPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Dodaj nową serie do ćwiczenia" Command="{Binding AddItemCommand}" />
+    </ContentPage.ToolbarItems>
+    <!--
+      x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
+      https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
+    -->
+    <StackLayout Spacing="10" Padding="15">
+        <Label Style="{DynamicResource ListItemTextStyle}" LineBreakMode="NoWrap" HorizontalTextAlignment="Center" FontSize="16">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="Podniesiona waga wszystkich potwórzeń ćwiczenia: " />
+                    <Span Text="{Binding LiftedTotal}" />
+                    <Span Text="kg" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+
+        <RefreshView x:DataType="local:ScheduleExerciseSetViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+            <CollectionView x:Name="ItemsListView"
+                ItemsSource="{Binding Items}"
+                SelectionMode="None">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout x:DataType="model:ScheduleExerciseSetForView" Padding="10" Spacing="10" Orientation="Vertical">
+                            <Frame BorderColor="Black" Padding="5" BackgroundColor="{StaticResource Primary}">
+                                <StackLayout Orientation="Vertical"
+                                Spacing="15">
+                                    <Label Style="{DynamicResource ListItemTextStyle}" LineBreakMode="NoWrap" HorizontalTextAlignment="Center" FontSize="14" TextColor="Black">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Planowana ilość powtórzeń: " />
+                                                <Span Text="{Binding PlannedReps}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Label Style="{DynamicResource ListItemTextStyle}" LineBreakMode="NoWrap" HorizontalTextAlignment="Center" FontSize="14" TextColor="Black">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Wykonana ilość powtórzeń: " />
+                                                <Span Text="{Binding ActualReps}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Label Style="{DynamicResource ListItemTextStyle}" LineBreakMode="NoWrap" HorizontalTextAlignment="Center" FontSize="14" TextColor="Black">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Waga obciążenia: " />
+                                                <Span Text="{Binding WeightUsed}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Button Text="Edytuj" BackgroundColor="{StaticResource Secondary}"  
+                                            Command="{Binding EditItemCommand, Source={RelativeSource AncestorType={x:Type local:ScheduleExerciseSetViewModel}}}"
+                                            CommandParameter="{Binding .}"/>
+                                </StackLayout>
+                            </Frame>
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    NumberOfTapsRequired="1"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:ScheduleExerciseSetViewModel}}, Path=ItemTapped}"		
+                                    CommandParameter="{Binding .}">
+                                </TapGestureRecognizer>
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </StackLayout>
+</ContentPage>

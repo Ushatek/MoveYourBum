@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoveYourBumAPI", "MoveYourBumAPI.csproj", "{6158DE26-7A8B-4584-BF62-4AD359AF33EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6158DE26-7A8B-4584-BF62-4AD359AF33EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6158DE26-7A8B-4584-BF62-4AD359AF33EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6158DE26-7A8B-4584-BF62-4AD359AF33EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6158DE26-7A8B-4584-BF62-4AD359AF33EC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E243F8C0-B0A5-430A-8C25-CFAEC8D51C97}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MoveYourBum.Views.ExerciseTypeV.ExerciseTypePage"
+             Title="{Binding Title}"
+             xmlns:local="clr-namespace:MoveYourBum.ViewModels.ExerciseTypeVM"  
+             xmlns:model="clr-namespace:MoveYourBum.Service.Reference"  
+             x:Name="BrowseItemsPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Dodaj nową kategorie" Command="{Binding AddItemCommand}" />
+    </ContentPage.ToolbarItems>
+    <!--
+      x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
+      https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
+    -->
+    <RefreshView x:DataType="local:ExerciseTypeViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView x:Name="ItemsListView"
+                ItemsSource="{Binding Items}"
+                SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout  x:DataType="model:ExerciseTypeForView" Padding="10" Spacing="10" Orientation="Vertical">
+                        <Frame BorderColor="Black" Padding="5" BackgroundColor="{StaticResource Primary}">
+                            <StackLayout Orientation="Vertical"
+                                Spacing="15">
+                                <Label Text="{Binding Name}" 
+                                        LineBreakMode="NoWrap" 
+                                        Style="{DynamicResource ListItemTextStyle}" 
+                                        HorizontalTextAlignment="Center"
+                                        FontSize="18" />
+                                <Label  Text="{Binding Description}" 
+                                        TextColor="Black"
+                                        LineBreakMode="NoWrap"
+                                        Style="{DynamicResource ListItemTextStyle}"
+                                        HorizontalTextAlignment="Center"
+                                        FontSize="14" />
+                                <Button Text="Edytuj" BackgroundColor="{StaticResource Secondary}"  
+                                        Command="{Binding EditItemCommand, Source={RelativeSource AncestorType={x:Type local:ExerciseTypeViewModel}}}"
+                                        CommandParameter="{Binding .}"/>
+                            </StackLayout>
+                        </Frame>
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                NumberOfTapsRequired="1"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:ExerciseTypeViewModel}}, Path=ItemTapped}"		
+                                CommandParameter="{Binding .}">
+                            </TapGestureRecognizer>
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+</ContentPage>
